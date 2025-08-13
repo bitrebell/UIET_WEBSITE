@@ -1,0 +1,261 @@
+import React, { Suspense } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Box, CircularProgress } from '@mui/material';
+import { useAuth } from './contexts/AuthContext';
+
+// Layout Components
+import MainLayout from './components/layout/MainLayout';
+import AuthLayout from './components/layout/AuthLayout';
+
+// Protected Route Component
+const ProtectedRoute = ({ children, roles = [] }) => {
+  const { isAuthenticated, user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (roles.length > 0 && !roles.includes(user.role)) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
+};
+
+// Lazy load pages
+const HomePage = React.lazy(() => import('./pages/HomePage'));
+const LoginPage = React.lazy(() => import('./pages/auth/LoginPage'));
+const RegisterPage = React.lazy(() => import('./pages/auth/RegisterPage'));
+const ForgotPasswordPage = React.lazy(() => import('./pages/auth/ForgotPasswordPage'));
+const ResetPasswordPage = React.lazy(() => import('./pages/auth/ResetPasswordPage'));
+const VerifyEmailPage = React.lazy(() => import('./pages/auth/VerifyEmailPage'));
+
+// Dashboard Pages
+const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard'));
+const ProfilePage = React.lazy(() => import('./pages/profile/ProfilePage'));
+
+// Student Pages
+const NotesPage = React.lazy(() => import('./pages/notes/NotesPage'));
+const NotificationsPage = React.lazy(() => import('./pages/notifications/NotificationsPage'));
+const MerchandisePage = React.lazy(() => import('./pages/merchandise/MerchandisePage'));
+const ProductDetailPage = React.lazy(() => import('./pages/merchandise/ProductDetailPage'));
+const OrdersPage = React.lazy(() => import('./pages/orders/OrdersPage'));
+
+// Teacher Pages
+const TeacherNotesPage = React.lazy(() => import('./pages/teacher/NotesPage'));
+const TeacherNotificationsPage = React.lazy(() => import('./pages/teacher/NotificationsPage'));
+
+// Admin Pages
+const AdminDashboard = React.lazy(() => import('./pages/admin/Dashboard'));
+const AdminUsersPage = React.lazy(() => import('./pages/admin/UsersPage'));
+const AdminNotesPage = React.lazy(() => import('./pages/admin/NotesPage'));
+const AdminNotificationsPage = React.lazy(() => import('./pages/admin/NotificationsPage'));
+const AdminMerchandisePage = React.lazy(() => import('./pages/admin/MerchandisePage'));
+const AdminOrdersPage = React.lazy(() => import('./pages/admin/OrdersPage'));
+const AdminAnalyticsPage = React.lazy(() => import('./pages/admin/AnalyticsPage'));
+
+// Error Pages
+const NotFoundPage = React.lazy(() => import('./pages/error/NotFoundPage'));
+
+function App() {
+  const { loading } = useAuth();
+
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
+        <CircularProgress size={40} />
+      </Box>
+    );
+  }
+
+  return (
+    <Suspense
+      fallback={
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="100vh"
+        >
+          <CircularProgress />
+        </Box>
+      }
+    >
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<HomePage />} />
+        
+        {/* Auth Routes */}
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
+        </Route>
+
+        {/* Protected Routes */}
+        <Route element={<MainLayout />}>
+          {/* Common Protected Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Student Routes */}
+          <Route
+            path="/notes"
+            element={
+              <ProtectedRoute roles={['student']}>
+                <NotesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <NotificationsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/merchandise"
+            element={
+              <ProtectedRoute>
+                <MerchandisePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/merchandise/:id"
+            element={
+              <ProtectedRoute>
+                <ProductDetailPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoute>
+                <OrdersPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Teacher Routes */}
+          <Route
+            path="/teacher/notes"
+            element={
+              <ProtectedRoute roles={['teacher', 'admin']}>
+                <TeacherNotesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/teacher/notifications"
+            element={
+              <ProtectedRoute roles={['teacher', 'admin']}>
+                <TeacherNotificationsPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Admin Routes */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute roles={['admin']}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute roles={['admin']}>
+                <AdminUsersPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/notes"
+            element={
+              <ProtectedRoute roles={['admin']}>
+                <AdminNotesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/notifications"
+            element={
+              <ProtectedRoute roles={['admin']}>
+                <AdminNotificationsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/merchandise"
+            element={
+              <ProtectedRoute roles={['admin']}>
+                <AdminMerchandisePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/orders"
+            element={
+              <ProtectedRoute roles={['admin']}>
+                <AdminOrdersPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/analytics"
+            element={
+              <ProtectedRoute roles={['admin']}>
+                <AdminAnalyticsPage />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+
+        {/* 404 Route */}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Suspense>
+  );
+}
+
+export default App;
