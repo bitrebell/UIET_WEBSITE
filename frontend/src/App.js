@@ -6,6 +6,9 @@ import { useAuth } from './contexts/AuthContext';
 // Layout Components
 import MainLayout from './components/layout/MainLayout';
 import AuthLayout from './components/layout/AuthLayout';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import DashboardRedirect from './components/auth/DashboardRedirect';
+import RoleProtectedRoute from './components/auth/RoleProtectedRoute';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, roles = [] }) => {
@@ -36,15 +39,17 @@ const ProtectedRoute = ({ children, roles = [] }) => {
 };
 
 // Lazy load pages
-const HomePage = React.lazy(() => import('./pages/HomePage'));
-const LoginPage = React.lazy(() => import('./pages/auth/LoginPage'));
-const RegisterPage = React.lazy(() => import('./pages/auth/RegisterPage'));
-const ForgotPasswordPage = React.lazy(() => import('./pages/auth/ForgotPasswordPage'));
-const ResetPasswordPage = React.lazy(() => import('./pages/auth/ResetPasswordPage'));
-const VerifyEmailPage = React.lazy(() => import('./pages/auth/VerifyEmailPage'));
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
+import ResetPasswordPage from './pages/auth/ResetPasswordPage';
+import VerifyEmailPage from './pages/auth/VerifyEmailPage';
+import StudentDashboard from './pages/student/StudentDashboard';
+import TeacherDashboard from './pages/teacher/TeacherDashboard';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 // Dashboard Pages
-const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard'));
 const ProfilePage = React.lazy(() => import('./pages/profile/ProfilePage'));
 
 // Student Pages
@@ -59,7 +64,6 @@ const TeacherNotesPage = React.lazy(() => import('./pages/teacher/NotesPage'));
 const TeacherNotificationsPage = React.lazy(() => import('./pages/teacher/NotificationsPage'));
 
 // Admin Pages
-const AdminDashboard = React.lazy(() => import('./pages/admin/Dashboard'));
 const AdminUsersPage = React.lazy(() => import('./pages/admin/UsersPage'));
 const AdminNotesPage = React.lazy(() => import('./pages/admin/NotesPage'));
 const AdminNotificationsPage = React.lazy(() => import('./pages/admin/NotificationsPage'));
@@ -114,15 +118,49 @@ function App() {
 
         {/* Protected Routes */}
         <Route element={<MainLayout />}>
-          {/* Common Protected Routes */}
+          {/* Dashboard Redirect */}
           <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <DashboardRedirect />
               </ProtectedRoute>
             }
           />
+
+          {/* Role-specific Dashboards */}
+          <Route
+            path="/student/dashboard"
+            element={
+              <ProtectedRoute>
+                <RoleProtectedRoute role="student">
+                  <StudentDashboard />
+                </RoleProtectedRoute>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/teacher/dashboard"
+            element={
+              <ProtectedRoute>
+                <RoleProtectedRoute role="teacher">
+                  <TeacherDashboard />
+                </RoleProtectedRoute>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <RoleProtectedRoute role="admin">
+                  <AdminDashboard />
+                </RoleProtectedRoute>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Common Protected Routes */}
           <Route
             path="/profile"
             element={

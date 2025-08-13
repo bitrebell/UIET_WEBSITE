@@ -53,6 +53,21 @@ app.use('/api/analytics', analyticsRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
+  const healthCheck = {
+    uptime: process.uptime(),
+    message: 'UIET College Backend is running!',
+    timestamp: new Date().toISOString(),
+    status: 'OK',
+    database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected'
+  };
+  
+  res.status(200).json(healthCheck);
+});
+app.use('/api/merchandise', merchandiseRoutes);
+app.use('/api/analytics', analyticsRoutes);
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
   res.status(200).json({ message: 'Server is running successfully' });
 });
 
