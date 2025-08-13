@@ -21,30 +21,30 @@ import StudentDashboard from './pages/student/StudentDashboard';
 import TeacherDashboard from './pages/teacher/TeacherDashboard';
 import AdminDashboard from './pages/admin/AdminDashboard';
 
-// Dashboard Pages
-const ProfilePage = React.lazy(() => import('./pages/profile/ProfilePage'));
+// Dashboard Pages (commented out for now)
+// const ProfilePage = React.lazy(() => import('./pages/profile/ProfilePage'));
 
-// Student Pages
-const NotesPage = React.lazy(() => import('./pages/notes/NotesPage'));
-const NotificationsPage = React.lazy(() => import('./pages/notifications/NotificationsPage'));
-const MerchandisePage = React.lazy(() => import('./pages/merchandise/MerchandisePage'));
-const ProductDetailPage = React.lazy(() => import('./pages/merchandise/ProductDetailPage'));
-const OrdersPage = React.lazy(() => import('./pages/orders/OrdersPage'));
+// Student Pages (commented out for now)
+// const NotesPage = React.lazy(() => import('./pages/notes/NotesPage'));
+// const NotificationsPage = React.lazy(() => import('./pages/notifications/NotificationsPage'));
+// const MerchandisePage = React.lazy(() => import('./pages/merchandise/MerchandisePage'));
+// const ProductDetailPage = React.lazy(() => import('./pages/merchandise/ProductDetailPage'));
+// const OrdersPage = React.lazy(() => import('./pages/orders/OrdersPage'));
 
-// Teacher Pages
-const TeacherNotesPage = React.lazy(() => import('./pages/teacher/NotesPage'));
-const TeacherNotificationsPage = React.lazy(() => import('./pages/teacher/NotificationsPage'));
+// Teacher Pages (commented out for now)
+// const TeacherNotesPage = React.lazy(() => import('./pages/teacher/NotesPage'));
+// const TeacherNotificationsPage = React.lazy(() => import('./pages/teacher/NotificationsPage'));
 
-// Admin Pages
-const AdminUsersPage = React.lazy(() => import('./pages/admin/UsersPage'));
-const AdminNotesPage = React.lazy(() => import('./pages/admin/NotesPage'));
-const AdminNotificationsPage = React.lazy(() => import('./pages/admin/NotificationsPage'));
-const AdminMerchandisePage = React.lazy(() => import('./pages/admin/MerchandisePage'));
-const AdminOrdersPage = React.lazy(() => import('./pages/admin/OrdersPage'));
-const AdminAnalyticsPage = React.lazy(() => import('./pages/admin/AnalyticsPage'));
+// Admin Pages (commented out for now)
+// const AdminUsersPage = React.lazy(() => import('./pages/admin/UsersPage'));
+// const AdminNotesPage = React.lazy(() => import('./pages/admin/NotesPage'));
+// const AdminNotificationsPage = React.lazy(() => import('./pages/admin/NotificationsPage'));
+// const AdminMerchandisePage = React.lazy(() => import('./pages/admin/MerchandisePage'));
+// const AdminOrdersPage = React.lazy(() => import('./pages/admin/OrdersPage'));
+// const AdminAnalyticsPage = React.lazy(() => import('./pages/admin/AnalyticsPage'));
 
-// Error Pages
-const NotFoundPage = React.lazy(() => import('./pages/error/NotFoundPage'));
+// Error Pages (commented out for now)
+// const NotFoundPage = React.lazy(() => import('./pages/error/NotFoundPage'));
 
 function App() {
   const { loading } = useAuth();

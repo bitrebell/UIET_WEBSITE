@@ -63,25 +63,25 @@ const RegisterPage = () => {
     department: Yup.string()
       .required('Department is required'),
     semester: Yup.number()
-      .when('role', {
-        is: 'student',
-        then: Yup.number()
-          .min(1, 'Semester must be between 1 and 8')
-          .max(8, 'Semester must be between 1 and 8')
-          .required('Semester is required for students'),
-        otherwise: Yup.number(),
+      .when('role', (role, schema) => {
+        return role === 'student' 
+          ? schema
+              .min(1, 'Semester must be between 1 and 8')
+              .max(8, 'Semester must be between 1 and 8')
+              .required('Semester is required for students')
+          : schema.nullable();
       }),
     studentId: Yup.string()
-      .when('role', {
-        is: 'student',
-        then: Yup.string().required('Student ID is required for students'),
-        otherwise: Yup.string(),
+      .when('role', (role, schema) => {
+        return role === 'student'
+          ? schema.required('Student ID is required for students')
+          : schema.nullable();
       }),
     teacherId: Yup.string()
-      .when('role', {
-        is: 'teacher',
-        then: Yup.string().required('Teacher ID is required for teachers'),
-        otherwise: Yup.string(),
+      .when('role', (role, schema) => {
+        return role === 'teacher'
+          ? schema.required('Teacher ID is required for teachers')
+          : schema.nullable();
       }),
   });
 
