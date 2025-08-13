@@ -57,7 +57,7 @@ function App() {
         alignItems="center"
         minHeight="100vh"
       >
-        <CircularProgress size={40} />
+        <CircularProgress size={60} />
       </Box>
     );
   }
@@ -132,137 +132,77 @@ function App() {
             }
           />
 
-          {/* Common Protected Routes */}
+          {/* Common Protected Routes - Redirects for now */}
           <Route
             path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/dashboard" replace />}
           />
 
-          {/* Student Routes */}
+          {/* Student Routes - Redirects for now */}
           <Route
             path="/notes"
-            element={
-              <ProtectedRoute roles={['student']}>
-                <NotesPage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/dashboard" replace />}
           />
           <Route
             path="/notifications"
-            element={
-              <ProtectedRoute>
-                <NotificationsPage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/dashboard" replace />}
           />
           <Route
             path="/merchandise"
-            element={
-              <ProtectedRoute>
-                <MerchandisePage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/dashboard" replace />}
           />
           <Route
             path="/merchandise/:id"
-            element={
-              <ProtectedRoute>
-                <ProductDetailPage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/dashboard" replace />}
           />
           <Route
             path="/orders"
-            element={
-              <ProtectedRoute>
-                <OrdersPage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/dashboard" replace />}
           />
 
-          {/* Teacher Routes */}
+          {/* Teacher Routes - Redirects for now */}
           <Route
             path="/teacher/notes"
-            element={
-              <ProtectedRoute roles={['teacher', 'admin']}>
-                <TeacherNotesPage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/teacher/dashboard" replace />}
           />
           <Route
             path="/teacher/notifications"
-            element={
-              <ProtectedRoute roles={['teacher', 'admin']}>
-                <TeacherNotificationsPage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/teacher/dashboard" replace />}
           />
 
-          {/* Admin Routes */}
+          {/* Admin Routes - Redirects for now */}
           <Route
             path="/admin"
-            element={
-              <ProtectedRoute roles={['admin']}>
-                <AdminDashboard />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/admin/dashboard" replace />}
           />
           <Route
             path="/admin/users"
-            element={
-              <ProtectedRoute roles={['admin']}>
-                <AdminUsersPage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/admin/dashboard" replace />}
           />
           <Route
             path="/admin/notes"
-            element={
-              <ProtectedRoute roles={['admin']}>
-                <AdminNotesPage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/admin/dashboard" replace />}
           />
           <Route
             path="/admin/notifications"
-            element={
-              <ProtectedRoute roles={['admin']}>
-                <AdminNotificationsPage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/admin/dashboard" replace />}
           />
           <Route
             path="/admin/merchandise"
-            element={
-              <ProtectedRoute roles={['admin']}>
-                <AdminMerchandisePage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/admin/dashboard" replace />}
           />
           <Route
             path="/admin/orders"
-            element={
-              <ProtectedRoute roles={['admin']}>
-                <AdminOrdersPage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/admin/dashboard" replace />}
           />
           <Route
             path="/admin/analytics"
-            element={
-              <ProtectedRoute roles={['admin']}>
-                <AdminAnalyticsPage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to="/admin/dashboard" replace />}
           />
         </Route>
 
         {/* 404 Route */}
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>
   );
