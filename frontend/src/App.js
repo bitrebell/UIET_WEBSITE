@@ -10,34 +10,6 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import DashboardRedirect from './components/auth/DashboardRedirect';
 import RoleProtectedRoute from './components/auth/RoleProtectedRoute';
 
-// Protected Route Component
-const ProtectedRoute = ({ children, roles = [] }) => {
-  const { isAuthenticated, user, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (roles.length > 0 && !roles.includes(user.role)) {
-    return <Navigate to="/dashboard" replace />;
-  }
-
-  return children;
-};
-
 // Lazy load pages
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/auth/LoginPage';
